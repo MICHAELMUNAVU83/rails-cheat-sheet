@@ -136,18 +136,29 @@ add this line to comments controller (create , new and edit methods)
 
  <td><%= button_to 'Destroy', [comment.post, comment], method: :delete, data: { confirm: 'Are you sure?' } %></td>
 
-
 ## TO HAVE A HOME PAGE BEFORE AUTHETICATION AND WITH LINKS FOR SIGN IN AND SIGN UP
 
     rails generate controller home index
+
 ## ADD THIS TO ROUTES
 
      authenticated :user do
     root "categories#index", as: :authenticated_root
-  end
 
-  root to: "home#index"
+end
+
+root to: "home#index"
 
 ## ADD THIS TO HOME INDEX VIEW
+
 <%= link_to "Sign up", new_user_registration_path %>
-<%= link_to "Log in", new_user_session_path %>  
+<%= link_to "Log in", new_user_session_path %>
+
+## FOR SIGNING ADD THIS TO THE ROUTES
+
+devise_scope :user do
+get '/users/sign_out' => 'devise/sessions#destroy'
+end
+## TO SIGN OUT
+
+<%= link_to "Sign Out", destroy_user_session_path , class: "btn btn-outline-danger" %>
