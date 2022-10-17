@@ -159,6 +159,21 @@ root to: "home#index"
 devise_scope :user do
 get '/users/sign_out' => 'devise/sessions#destroy'
 end
+
 ## TO SIGN OUT
 
 <%= link_to "Sign Out", destroy_user_session_path , class: "btn btn-outline-danger" %>
+
+## PUSHING TO HEROKU
+
+switch to master branch
+
+        heroku login
+        heroku create
+        heroku stack
+
+        heroku stack:set heroku-18
+
+        git push heroku master
+
+        heroku run rails db:migrate
