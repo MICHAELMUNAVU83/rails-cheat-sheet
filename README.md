@@ -17,8 +17,9 @@ add your username and password to database.yml
     gem 'devise'
     bundle install
     rails generate devise:install
-    (add config.action_mailer.default_url_options = { host: 'localhost', port: 3000 } to development.rb)
+    (add config.action_mailer.default_url_options = { host: 'localhost', port: 3000 } to config/environmrnt/development.rb)
     (add root 'posts#index' to routes.rb)
+    rails generate devise:views
     rails generate devise User
     rails db:migrate
 
@@ -35,6 +36,7 @@ add your username and password to database.yml
 ## ADD EXTRA FIELDS TO USER TABLE
 
     rails generate migration add_fieldname_to_tablename fieldname:string
+    rails generate migration add_name_to_users name:string
     rails db:migrate
 
 ## ADD EXTRA INPUT FIELDS IN DEVISE REGISTRATION FORM
@@ -54,6 +56,13 @@ in app/controllers/application_controller.rb
     def configure_permitted_parameters
       devise_parameter_sanitizer.permit(:sign_up, keys: [:firstname, :lastname])
     end
+
+## ADD EXTRA FIELS IN VIEWS FOR REGISTRATION
+
+<div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name, autofocus: true, autocomplete: "name" %>
+  </div>
 
 ## Add :turbo_stream as a navigational format. This line goes in config/initializers/devise.rb.
 
@@ -85,12 +94,20 @@ add this line to create , new and edit methods
       params.require(:post).permit(:title, :text)
     end
 
+## TO ONLY SEE POSTS FOR CURRENT USER
+
+    def index
+      @posts = Post.where(user_id: current_user.id)
+    end
+
 ## ADD NESTED SCAFFOLD GEM
 
         gem 'nested_scaffold'
         bundle install
 
 ## CREATED SCAFFOLD
+
+            rails generate nested_scaffold PARENT_NAME/NAME [field:type field:type] [options]
 
             rails g nested_scaffold post/comment  text:string  post:references user:references
             rails db:migrate
@@ -154,7 +171,7 @@ root to: "home#index"
 <%= link_to "Sign up", new_user_registration_path %>
 <%= link_to "Log in", new_user_session_path %>
 
-## FOR SIGNING ADD THIS TO THE ROUTES
+## FOR SIGNING OUT ADD THIS TO THE ROUTES
 
 devise_scope :user do
 get '/users/sign_out' => 'devise/sessions#destroy'
@@ -162,7 +179,9 @@ end
 
 ## TO SIGN OUT
 
-<%= link_to "Sign Out", destroy_user_session_path , class: "btn btn-outline-danger" %>
+<p><%= link_to "Sign Out", destroy_user_session_path %></p>
+<p><%= link_to "Sign In", new_user_session_path %></p>
+<p><%= link_to "Sign Up", new_user_registration_path %></p>
 
 ## PUSHING TO HEROKU
 
@@ -177,3 +196,19 @@ switch to master branch
         git push heroku master
 
         heroku run rails db:migrate
+
+## CREATING RAILS API ONLY APP
+
+rails new my_first_rails_api --api --database=postgresql
+
+## CREATE MODEL
+
+rails g model dog name:string age:integer
+
+## CREATE MIGRATION
+
+rails db:migrate
+
+## CREATE CONTROLLER
+
+rails g controller Api/v1/dogs
