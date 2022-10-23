@@ -45,7 +45,7 @@ add your username and password to database.yml
 
     has_many :posts
 
-## ADD CODE TO ALLOW ONE TO ADD EXTRA DETAILS ON LOGIN
+## ADD CODE TO ALLOW ONE TO ADD EXTRA DETAILS ON    SIGNING UP
 
 in app/controllers/application_controller.rb
 
