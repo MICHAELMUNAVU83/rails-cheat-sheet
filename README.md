@@ -23,6 +23,10 @@ add your username and password to database.yml
     rails generate devise User
     rails db:migrate
 
+## Add :turbo_stream as a navigational format. This line goes in config/initializers/devise.rb.
+
+        config.navigational_formats = [:html, :turbo_stream]
+
 ## CREATING BASE SCAFFOLD WITH REFERENCE TO USER
 
     rails generate scaffold Post title:string body:text user:references
@@ -45,7 +49,7 @@ add your username and password to database.yml
 
     has_many :posts
 
-## ADD CODE TO ALLOW ONE TO ADD EXTRA DETAILS ON    SIGNING UP
+## ADD CODE TO ALLOW ONE TO ADD EXTRA DETAILS ON SIGNING UP
 
 in app/controllers/application_controller.rb
 
@@ -63,10 +67,6 @@ in app/controllers/application_controller.rb
     <%= f.label :name %><br />
     <%= f.text_field :name, autofocus: true, autocomplete: "name" %>
   </div>
-
-## Add :turbo_stream as a navigational format. This line goes in config/initializers/devise.rb.
-
-        config.navigational_formats = [:html, :turbo_stream]
 
 ## REMOVE EXTRA ALERTS FROM LAYOUTS/APP.HTML.ERB
 
