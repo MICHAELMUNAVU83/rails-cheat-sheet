@@ -212,3 +212,25 @@ rails db:migrate
 ## CREATE CONTROLLER
 
 rails g controller Api/v1/dogs
+
+
+
+## To have a before action in a controller
+
+rails generate controller Pages home
+
+
+In the routes
+   
+
+
+  authenticated :user do
+    root to: "donations#index", as: :authenticated_root
+  end
+
+  unauthenticated do
+    root to: "pages#home"
+  end
+
+## To have a before action in a controller
+
